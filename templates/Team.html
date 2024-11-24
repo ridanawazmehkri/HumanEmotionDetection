@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Project Website</title>
+        <link rel="stylesheet" href="{% static 'DKRZ/css/styles.css' %}">
+        <script src="https://kit.fontawesome.com/ad196799d1.js" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap" rel="stylesheet">
+ 
+        <style>
+            .navbar__btn {
+                position: relative;
+                display: inline-block;
+            }
+    
+            .button {
+                display: block;
+                padding: 10px;
+                background-color: #f77062;
+                color: #fff;
+                text-decoration: none;
+            }
+    
+            .dropdown {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background-color: #fe5196;
+                background-image: linear-gradient(to top, #b721ff 0%, #21d4fd 100%);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                z-index: 1;
+            }
+    
+            .navbar__btn:hover .dropdown {
+                display: block;
+            }
+    
+            .dropdown{
+                -items: center;
+            }
+            .dropdown a {
+                display: block;
+                padding: 10px;
+                color: #333;
+                text-decoration: none;
+                font-size: 15px;    
+            }
+            .card {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+  padding: 2px 16px;
+}
+ 
+
+        </style>
+    </head>
+    <body>
+        <nav class="navbar">
+        <div class="navbar__container">
+            <a href="#" id="navbar__logo"> <i class="fas.fa.gem"></i> PROJECT DKRZ</a>
+            <div class="navbar__toggle" id="mobile-menu">
+            <span class="bar"></span> 
+            <span class="bar"></span> 
+            <span class="bar"></span> 
+            </div>
+            <ul class="navbar__menu">
+                <li class="navbar__item">
+                    <a href="{% url 'home' %}" class="navbar__links"> Home </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/tech.html" class="navbar__links"> Team </a>
+                </li>
+                <!--<li class="navbar__item">
+                    <a href="/" class="navbar__links">  </a>
+                     <li class="navbar__btn">
+                        <a href="/" class="button"> Select Model </a>
+                    </li>-->
+                </li>
+                <li class="navbar__btn">
+                    <a href="/" class="button">Demo</a>
+                    <div class="dropdown">
+                        <a href="{% url 'dem' %}">Show Demo</a>
+                       
+                    </div>
+                </li>
+            </ul>
+        </div>  
+        </nav>
+        <div class="card">
+            <img src={% static "DKRZ/img/krish.jpg" %} alt="Avatar" style="width:100%">
+            <div class="container">
+              <h4><b>John Doe</b></h4>
+              <p>Architect & Engineer</p>
+            </div>
+          </div>
+          <div class="card">
+            <img src={% static "DKRZ/img/zyna.jpg" %} alt="Avatar" style="width:100%">
+            <div class="container">
+              <h4><b>John Doe</b></h4>
+              <p>Architect & Engineer</p>
+            </div>
+          </div>
+          <div class="card">
+            <img src="img_avatar.png" alt="Avatar" style="width:100%">
+            <div class="container">
+              <h4><b>John Doe</b></h4>
+              <p>Architect & Engineer</p>
+            </div>
+          </div>
+          <div class="card">
+            <img src="img_avatar.png" alt="Avatar" style="width:100%">
+            <div class="container">
+              <h4><b>John Doe</b></h4>
+              <p>Architect & Engineer</p>
+            </div>
+          </div>    
+
+        <script src="{% static 'DKRZ/js/app.js' %}"></script>
+  
+    </body>
+</html>

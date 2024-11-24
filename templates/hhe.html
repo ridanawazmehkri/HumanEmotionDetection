@@ -1,0 +1,213 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Project Website</title>
+        <link rel="stylesheet" href="{% static 'DKRZ/css/styles.css' %}">
+        <script src="https://kit.fontawesome.com/ad196799d1.js" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap" rel="stylesheet">
+        <style>
+            .navbar__btn {
+                position: relative;
+                display: inline-block;
+            }
+    
+            .button {
+                display: block;
+                padding: 10px;
+                background-color: #f77062;
+                color: #fff;
+                text-decoration: none;
+            }
+    
+            .dropdown {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background-color: #fe5196;
+                background-image: linear-gradient(to top, #b721ff 0%, #21d4fd 100%);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                z-index: 1;
+            }
+    
+            .navbar__btn:hover .dropdown {
+                display: block;
+            }
+    
+            .dropdown{
+                -items: center;
+            }
+            .dropdown a {
+                display: block;
+                padding: 10px;
+                color: #333;
+                text-decoration: none;
+                font-size: 15px;
+                
+            }
+            .video {
+             
+            width: 500px;
+            height: 400px;
+            object-fit: cover;
+        }
+        .images{
+        
+          display: flex;
+          flex-direction: row;
+        }
+        #im{
+            display: none;
+        }
+        
+
+        
+       
+        
+        </style>
+    </head>
+    <body>
+        <nav class="navbar">
+        <div class="navbar__container">
+            <a href="#" id="navbar__logo"> <i class="fas.fa.gem"></i> PROJECT DKRZ</a>
+            <div class="navbar__toggle" id="mobile-menu">
+            <span class="bar"></span> 
+            <span class="bar"></span> 
+            <span class="bar"></span> 
+            </div>
+            <ul class="navbar__menu">
+                <li class="navbar__item">
+                    <a href="{% url 'home' %}" class="navbar__links"> Home </a>
+                </li>
+                <li class="navbar__item">
+                    <a href="/tech.html" class="navbar__links"> Team </a>
+                </li>
+                <!--<li class="navbar__item">
+                    <a href="/" class="navbar__links">  </a>
+                     <li class="navbar__btn">
+                        <a href="/" class="button"> Select Model </a>
+                    </li>-->
+                </li>
+                <li class="navbar__btn">
+                    <a href="/" class="button">Demo</a>
+                    <div class="dropdown">
+                        <a href="{% url 'dem' %}">Show Demo</a>
+                       
+                    </div>
+                </li>
+            </ul>
+        </div>  
+        </nav>
+
+        <div class="images">
+          <video class="video" id="vid"></video>
+          <div><img src="" id="im" class="video"></div>
+          
+          
+      </div>
+      <br />
+    <div class="hello">
+      <button id="but">Open WebCam</button>
+      <button id="captureButton">Capture image</button>
+      <button id="closeButton">Close WebCam</button>
+    </div>
+
+
+        <script src="{% static 'DKRZ/js/app.js' %}"></script>
+        <script>
+       document.addEventListener("DOMContentLoaded", () => {
+    let video = document.getElementById("vid");
+    let mediaDevices = navigator.mediaDevices;
+    let stream; // Variable to hold the stream object for closing later
+    let im=document.getElementById("im");
+    
+    // Function to start the camera stream
+    function startCamera() {
+        mediaDevices
+            .getUserMedia({
+                video: true,
+                audio: true,
+            })
+            .then((str) => {
+                stream = str; // Store the stream object for closing later
+                // Changing the source of video to current stream.
+                video.srcObject = stream;
+                video.addEventListener("loadedmetadata", () => {
+                    video.play();
+                });
+            })
+            .catch(alert);
+    }
+
+    // Function to capture image from the video stream
+    function captureImage() {
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageData = canvas.toDataURL("image/jpeg"); // Change to image/jpeg for JPEG format
+        console.log("Captured image data:", imageData);
+        im.src=imageData;
+        im.style.display="flex";
+
+        fetch('http://127.0.0.1:8000/api/getQ', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken') // Include CSRF token
+    },
+    body: JSON.stringify({ image: imageData })
+})
+.then(response => response.json())
+.then(data => {
+    if (data.success) {
+        console.log('Image processed successfully:', data.message);
+    } else {
+        console.error('Failed to process image:', data.message);
+    }
+})
+.catch(error => {
+    console.error('Error processing image:', error);
+});
+function getCookie(name) {
+    const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return cookieValue ? cookieValue.pop() : '';
+}
+        // Add your logic to send imageData to the server or perform further actions
+    }
+
+    // Function to stop the camera stream
+    function stopCamera() {
+        if (stream) {
+            stream.getTracks().forEach((track) => {
+                track.stop();
+            });
+            video.srcObject = null;
+            im.src=""
+            im.style.display="none";
+        }
+    }
+
+    // Event listener for the button to start the camera
+    document.getElementById("but").addEventListener("click", startCamera);
+
+    // Event listener for capturing image
+    document.getElementById("captureButton").addEventListener("click", captureImage);
+
+    // Event listener for closing the camera
+    document.getElementById("closeButton").addEventListener("click", stopCamera);
+});
+
+
+
+
+
+        </script>
+      </body>
+  </html>
