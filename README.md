@@ -19,7 +19,7 @@ The approach used for training the model is Transfer learning. A PPT link is att
 -The connection folder holds the logic to predict our emotion and give the output to our API folder which then passes it on to our DKRZ folder. 
 
 ## Running the project. 
-To get started download the zip file provided in the repository and open it in VS code or any code editor. You can also directly open the folder path in CMD and type 'python manage.py runserver' and you can interact with our project now.
+To get started clone the repository and open it in VS code or any code editor. You can also directly open the folder path in CMD and type 'python manage.py runserver' and you can interact with our project now.
 
 ## Results 
 ![image](https://github.com/user-attachments/assets/763601f8-86b0-4edb-bc6c-ce3f3c31198c)
