@@ -4,7 +4,7 @@ A final year group project that detects human emotions using facial expressions 
 ## Project Description
 This project demonstrates a connection between a deep learning model with a website created via Django.
 The model predicts human emotions via facial expressions. The model is trained on over 10000+ images which can be found on kaggle. ([LINK](https://www.kaggle.com/datasets/msambare/fer2013))
-The approach used for training the model is Transfer learning. A PPT link is attached to understand the whole project in simple terms. 
+The approach used for training the model is Transfer learning. A PPT link is attached to understand the whole project in simple terms. (https://docs.google.com/presentation/d/1Jh0iAHBvrFaGNuMFHxaQaj9jf-Z-k_MrG68wkpsXmEY/edit?usp=sharing) 
 
 ## Project Explanation
 -The repository contains few folders the main one being DKRZ. 
